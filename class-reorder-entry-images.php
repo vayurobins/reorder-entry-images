@@ -307,7 +307,7 @@ class ReorderEntryImages {
 			'orderby'        => 'menu_order',
 			'post_type'      => 'attachment',
 			'post_parent'    => get_the_ID(),
-			'post_mime_type' => 'image',
+			'post_mime_type' => 'image/jpeg',
 			'post_status'    => null,
 			'numberposts'    => -1,
 			'exclude'		 => $thumb_id // Exclude featured thumbnail
@@ -320,14 +320,15 @@ class ReorderEntryImages {
 
 			<div class="imageuploader">
 				<div id="attachmentcontainer">
-					<?php $i = 0; foreach( $attachments as $attachment ) :
-						$attachmentid = $attachment->ID;
+					<?php $i = 0; foreach( $attachments as $attachment ) : // pre($attachment);
 						$editorimage = wp_get_attachment_image_src( $attachment->ID, 'thumbnail', false, false);
 						$i++;
 						?>
 						<div class="attachment" id="image-<?php echo $attachment->ID; ?>">
 							<div class="image">
-								<img width="100" height="auto" src="<?php echo esc_attr( $editorimage[0] ); ?>" />
+								<a href="<?php echo esc_url( get_admin_url( '', 'post.php?post='.$attachment->ID.'&action=edit' ) ); ?>" title="<?php echo esc_attr( $attachment->post_title ); ?>">
+									<img width="100" height="auto" src="<?php echo esc_url( $editorimage[0] ); ?>" />
+								</a>
 								<input type="hidden" name="att_id[]" id="att_id" value="<?php echo esc_attr( $attachment->ID ); ?>" />
 							</div>
 							<div class="title"><?php echo esc_attr( $attachment->post_title ); ?></div>
