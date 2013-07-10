@@ -20,7 +20,7 @@ Here is the php code to get the images in your theme:
 `$thumb_id = get_post_thumbnail_id( get_the_ID() );
 $args = array(
 	'post_type' => 'attachment',
-	'post_mime_type'  => 'image',
+	'post_mime_type'  => 'image/jpeg',
 	'orderby' => 'menu_order',
 	'numberposts' => -1,
 	'order' => 'ASC',
