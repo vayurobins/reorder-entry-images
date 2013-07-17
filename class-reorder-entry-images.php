@@ -281,7 +281,7 @@ class ReorderEntryImages {
 				foreach( $this->the_post_type as $type ) {
 					add_meta_box(
 						'sort-entry-images',
-						__( 'Sort your images with drag & drop', 'sort-entry-images' ),
+						__( 'Reorder images with drag & drop', 'sort-entry-images' ),
 						array( $this, 'add_image_metabox_sorter' ),
 						$type,
 						'normal',
