@@ -63,7 +63,7 @@ class ReorderEntryImages {
 	 *
 	 * @var      string
 	 */
-	protected $the_post_type = 'page';
+	protected $the_post_type = array();
 
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
@@ -87,7 +87,7 @@ class ReorderEntryImages {
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
 
 			// Get the post type from options settings and save in variable
-			$this->the_post_type = get_option( 'rei-options' );
+			$this->the_post_type = is_array( get_option( 'rei-options' ) ) ? get_option( 'rei-options' ) : $this->the_post_type;
 
 			// Add metabox on the proper metabox hook
 			if( is_array( $this->the_post_type ) ) {
