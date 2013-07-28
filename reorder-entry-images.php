@@ -14,7 +14,7 @@
  * Plugin Name: Reorder Entry Images
  * Plugin URI:  http://vayu.dk/reorder-entry-images/
  * Description: This will get all the attachments that belong to a post or a page and display them in a list. This list can be reordered by drag and drop.
- * Version:     1.0.0
+ * Version:     1.0.1
  * Author:      Vayu Robins
  * Author URI:  http://vayu.dk/
  * Text Domain: reorder-entry-images
