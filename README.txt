@@ -9,13 +9,17 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Get all the attachments (images only) that belong to a post or a page and display them in a list. This list can be reordered by drag and drop.
 
-== Description ==
+== Description =
 
 This plugin will help you manually reorder or sort the images attached to your post, custom post type or page.  Once installed and acivated you can choose which post type or page you want this functionality on.  All the images attached to that specific post or page will then be listed on the post-edit page in the admin.  You will then be able to drag & drop the images in the order you want them to be listed.
 
 This will only affect those images uploaded to the specific post or page.
 
+<<<<<<< HEAD
 Here is the php code that will help you display the images in your theme:
+=======
+Here is the php code to get the images in your theme:
+>>>>>>> svn
 
 `$thumb_id = get_post_thumbnail_id( get_the_ID() );
 $args = array(
@@ -34,7 +38,10 @@ if ( $attachments ) :
 	endforeach;	
 endif;`
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> svn
 == Website ==
 http://vayu.dk/reorder-entry-images/
 
@@ -53,4 +60,8 @@ http://vayu.dk/reorder-entry-images/
 == Changelog ==
 
 = 1.0 =
+<<<<<<< HEAD
 * Launch first version of plugin.
+=======
+* Launch first version of plugin.
+>>>>>>> svn
