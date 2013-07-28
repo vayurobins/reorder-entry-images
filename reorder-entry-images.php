@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 /*
 Plugin Name: Reorder Entry Images
 Plugin URI:  http://vayu.dk/reorder-entry-images/
@@ -12,8 +11,6 @@ License:     GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 */
 
-=======
->>>>>>> svn
 /**
  * The Reorder Entry Images plugin.
  *
@@ -25,22 +22,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * @link      http://vayu.dk/reorder-entry-images/
  * @copyright 2013 Vayu Robins
  *
-<<<<<<< HEAD
 */
-=======
- * @wordpress-plugin
- * Plugin Name: Reorder Entry Images
- * Plugin URI:  http://vayu.dk/reorder-entry-images/
- * Description: This will get all the attachments that belong to a post or a page and display them in a list. This list can be reordered by drag and drop.
- * Version:     1.0.1
- * Author:      Vayu Robins
- * Author URI:  http://vayu.dk/
- * Text Domain: reorder-entry-images
- * License:     GPL-2.0+
- * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
- * Domain Path: /lang
- */
->>>>>>> svn
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
