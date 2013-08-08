@@ -99,7 +99,15 @@ class ReorderEntryImages {
 			// Updates the attachments when saving
 			add_filter( 'wp_insert_post_data', array( $this, 'sort_images_meta_save' ), 99, 2 );
 
+			
+
+
+
 		endif;
+
+
+		// Add list attached images shortcode
+			add_shortcode( 'list_attached_images', array( $this, 'list_attached_images_shortcode' ) );
 
 	}
 
@@ -398,5 +406,68 @@ class ReorderEntryImages {
 		}
 		
 		return $object_types;
+	}
+
+
+	/**
+	 * Produces the date of post publication.
+	 *
+	 * Supported shortcode attributes are:
+	 *   after (output after link, default is empty string),
+	 *   before (output before link, default is empty string),
+	 *   format (date format, default is value in date_format option field),
+	 *   label (text following 'before' output, but before date).
+	 *
+	 * Output passes through 'genesis_post_date_shortcode' filter before returning.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param array|string $attr Shortcode attributes. Empty string if no attributes.
+	 * @return string Shortcode output
+	 */
+	function list_attached_images_shortcode( $attr ) {
+		$defaults =  array(
+			'imagesize'      => 'thumbnail',
+			'numberimages'	  => -1,
+			'order'			  => 'desc',
+			'listclass'      => 'list-images',
+			'before'          => '<li class="image-item %s">',
+			'after'           => '</li>',
+			'imagelink'      => false,
+			'items_wrap'      => '<ul id="list-attached-images" class="%1$s">%2$s</ul>',
+		);
+		/* Merge the input attributes and the defaults. */
+		extract( shortcode_atts( $defaults, $attr ) );
+
+		$wrap_class = $listclass ? $listclass : '';
+
+		$thumb_id = get_post_thumbnail_id( get_the_ID() );
+		$args = array(
+			'post_type' => 'attachment',
+			'post_mime_type'  => 'image/jpeg',
+			'orderby' => 'menu_order',
+			'numberposts' => $numberimages,
+			'order' => $order,
+			'post_parent' => get_the_ID(),
+			'exclude' => $thumb_id // Exclude featured thumbnail
+		); 
+		$attachments = get_posts($args);
+		$images_count = count( $attachments );
+
+		if ( $attachments ) :
+			foreach ( $attachments as $key => $attachment ) :
+				if( $imagelink == 'true' ) {
+					$link_before = sprintf( '<a href="%s" title="%s">', esc_attr( $attachment->guid ), esc_attr( $attachment->post_title ) );
+					$link_after = '</a>';
+				}
+				$last_child = $key%$images_count == ($images_count-1) ? 'last-child' : '';
+				$items .= sprintf( $before, esc_attr( $last_child ) ) . $link_before . wp_get_attachment_image( $attachment->ID, $imagesize ) .$link_after . $after;
+			endforeach;	
+		endif;
+
+		$output .= sprintf( $items_wrap, esc_attr( $wrap_class ), $items );
+
+		return apply_filters( 'rei_shortcode', $output, $attr );
+
 	}
 }
