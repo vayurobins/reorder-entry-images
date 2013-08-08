@@ -468,6 +468,5 @@ class ReorderEntryImages {
 		$output .= sprintf( $items_wrap, esc_attr( $wrap_class ), $items );
 
 		return apply_filters( 'rei_shortcode', $output, $attr );
-
 	}
 }
