@@ -24,7 +24,7 @@ class ReorderEntryImages {
 	 *
 	 * @var     string
 	 */
-	protected $version = '1.0';
+	protected $version = '1.0.1';
 
 	/**
 	* Unique identifier for your plugin.
@@ -32,7 +32,7 @@ class ReorderEntryImages {
 	* Use this value (not the variable name) as the text domain when internationalizing strings of text. It should
 	* match the Text Domain file header in the main plugin file.
 	*
-	* @since 1.0
+	* @since 1.0.0
 	*
 	* @var string
 	*/
@@ -41,7 +41,7 @@ class ReorderEntryImages {
 	/**
 	 * Instance of this class.
 	 *
-	 * @since    1.0
+	 * @since    1.0.0
 	 *
 	 * @var      object
 	 */
@@ -50,7 +50,7 @@ class ReorderEntryImages {
 	/**
 	* Slug of the plugin screen.
 	*
-	* @since 1.0
+	* @since 1.0.0
 	*
 	* @var string
 	*/
@@ -59,7 +59,7 @@ class ReorderEntryImages {
 	/**
 	 * Entry type to add the metabox to.
 	 *
-	 * @since    1.0
+	 * @since    1.0.0
 	 *
 	 * @var      string
 	 */
@@ -99,15 +99,10 @@ class ReorderEntryImages {
 			// Updates the attachments when saving
 			add_filter( 'wp_insert_post_data', array( $this, 'sort_images_meta_save' ), 99, 2 );
 
-			
-
-
-
 		endif;
 
-
 		// Add list attached images shortcode
-			add_shortcode( 'list_attached_images', array( $this, 'list_attached_images_shortcode' ) );
+		add_shortcode( 'list_attached_images', array( $this, 'list_attached_images_shortcode' ) );
 
 	}
 
@@ -132,7 +127,7 @@ class ReorderEntryImages {
 	/**
 	 * Fired when the plugin is activated.
 	 *
-	 * @since    1.0
+	 * @since    1.0.0
 	 *
 	 * @param    boolean    $network_wide    True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog.
 	 */
@@ -146,7 +141,7 @@ class ReorderEntryImages {
 	/**
 	 * Fired when the plugin is deactivated.
 	 *
-	 * @since    1.0
+	 * @since    1.0.0
 	 *
 	 * @param    boolean    $network_wide    True if WPMU superadmin uses "Network Deactivate" action, false if WPMU is disabled or plugin is deactivated on an individual blog.
 	 */
@@ -160,7 +155,7 @@ class ReorderEntryImages {
 	/**
 	 * Load the plugin text domain for translation.
 	 *
-	 * @since    1.0
+	 * @since    1.0.0
 	 */
 	public function load_plugin_textdomain() {
 
@@ -191,7 +186,7 @@ class ReorderEntryImages {
 	/**
 	 * Register and enqueue admin-specific JavaScript.
 	 *
-	 * @since    1.0
+	 * @since    1.0.0
 	 *
 	 * @return   null    Return early if no settings page is registered.
 	 */
@@ -207,10 +202,10 @@ class ReorderEntryImages {
 	/**
 	* Register the administration menu for this plugin into the WordPress Dashboard menu.
 	*
-	* @since 1.0
+	* @since 1.0.0
 	*/
 	public function add_plugin_admin_menu() {
-		add_options_page(
+		$this->pagehook = add_options_page(
 			__( 'Reorder entry images', $this->plugin_slug ),
 			__( 'Reorder images', $this->plugin_slug ),
 			'manage_options',
@@ -222,7 +217,7 @@ class ReorderEntryImages {
 	/**
 	* Render the settings page for this plugin.
 	*
-	* @since 1.0
+	* @since 1.0.0
 	*/
 	public function display_plugin_admin_page() {
 		include_once( 'views/admin.php' );
@@ -245,7 +240,7 @@ class ReorderEntryImages {
 	/**
 	* Render the settings section page for this plugin.
 	*
-	* @since 1.0
+	* @since 1.0.0
 	*/
 	public function rei_general_settings_callback() {
 		echo 'Choose which post type you would like to use the reorder images functionality.';
@@ -254,7 +249,7 @@ class ReorderEntryImages {
 	/**
 	* Render the settings field for this plugin.
 	*
-	* @since 1.0
+	* @since 1.0.0
 	*/
 	public function rei_general_settings_field_callback() {
 
@@ -410,17 +405,9 @@ class ReorderEntryImages {
 
 
 	/**
-	 * Produces the date of post publication.
+	 * Add shortcode to show image attachements in a post or page.
 	 *
-	 * Supported shortcode attributes are:
-	 *   after (output after link, default is empty string),
-	 *   before (output before link, default is empty string),
-	 *   format (date format, default is value in date_format option field),
-	 *   label (text following 'before' output, but before date).
-	 *
-	 * Output passes through 'genesis_post_date_shortcode' filter before returning.
-	 *
-	 * @since 1.1.0
+	 * @since 1.0.1
 	 *
 	 * @param array|string $attr Shortcode attributes. Empty string if no attributes.
 	 * @return string Shortcode output
@@ -428,7 +415,7 @@ class ReorderEntryImages {
 	function list_attached_images_shortcode( $attr ) {
 		$defaults =  array(
 			'imagesize'      => 'thumbnail',
-			'numberimages'	  => -1,
+			'numberimages'	  => 0,
 			'order'			  => 'desc',
 			'listclass'      => 'list-images',
 			'before'          => '<li class="image-item %s">',
@@ -440,7 +427,7 @@ class ReorderEntryImages {
 		extract( shortcode_atts( $defaults, $attr ) );
 
 		$wrap_class = $listclass ? $listclass : '';
-
+echo $listclass;
 		$thumb_id = get_post_thumbnail_id( get_the_ID() );
 		$args = array(
 			'post_type' => 'attachment',
