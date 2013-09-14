@@ -20,7 +20,7 @@ class ReorderEntryImages {
 	/**
 	 * Plugin version, used for cache-busting of style and script file references.
 	 *
-	 * @since   1.0
+	 * @since   1.0.0
 	 *
 	 * @var     string
 	 */
