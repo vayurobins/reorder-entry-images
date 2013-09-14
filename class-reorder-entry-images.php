@@ -68,7 +68,7 @@ class ReorderEntryImages {
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
-	 * @since     1.0
+	 * @since     1.0.0
 	 */
 	private function __construct() {
 
@@ -110,7 +110,7 @@ class ReorderEntryImages {
 	/**
 	 * Return an instance of this class.
 	 *
-	 * @since     1.0
+	 * @since     1.0.0
 	 *
 	 * @return    object    A single instance of this class.
 	 */
@@ -169,7 +169,7 @@ class ReorderEntryImages {
 	/**
 	 * Register and enqueue admin-specific style sheet.
 	 *
-	 * @since     1.0
+	 * @since     1.0.0
 	 *
 	 * @return    null    Return early if no settings page is registered.
 	 */
@@ -226,7 +226,7 @@ class ReorderEntryImages {
 	/**
 	 * Register plugin settings
 	 *
-	 * @since     1.0
+	 * @since     1.0.0
 	 */
 	public function register_plugin_settings() {
 
@@ -268,7 +268,7 @@ class ReorderEntryImages {
 	/**
 	 * Add a custom metabox to post, page or cpt, that displays the attachments in a list.
 	 *
-	 * @since   1.0
+	 * @since   1.0.0
 	 */
 	public function add_image_sortable_box() {
 
@@ -299,7 +299,7 @@ class ReorderEntryImages {
 	 * Gets all attachments and displays them in a sortable list on admin pages.
 	 *
 	 * @param 	array|object 	$p
-	 * @since   1.0
+	 * @since   1.0.0
 	 */
 	public function add_image_metabox_sorter( $p ) {
 
@@ -352,7 +352,7 @@ class ReorderEntryImages {
 	 * @param 	array 	$data			Sinitized post data
 	 * @param 	array 	$_post_vars		Raw post data
 	 * @return	$data
-	 * @since   1.0
+	 * @since   1.0.0
 	 */
 	public function sort_images_meta_save( $data, $_post_vars ) {
 		//global $post_ID;
@@ -388,6 +388,8 @@ class ReorderEntryImages {
 
 	/**
 	 * Use to get post types
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $key
 	 * @return array|object
