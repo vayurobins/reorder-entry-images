@@ -24,11 +24,7 @@ class ReorderEntryImages {
 	 *
 	 * @var     string
 	 */
-<<<<<<< HEAD
 	protected $version = '1.0.2';
-=======
-	protected $version = '1.0.1';
->>>>>>> ec02a6a812759e57b7c8a22b400ee90e6df9cd5a
 
 	/**
 	* Unique identifier for your plugin.
@@ -431,11 +427,7 @@ class ReorderEntryImages {
 		extract( shortcode_atts( $defaults, $attr ) );
 
 		$wrap_class = $listclass ? $listclass : '';
-<<<<<<< HEAD
 
-=======
-echo $listclass;
->>>>>>> ec02a6a812759e57b7c8a22b400ee90e6df9cd5a
 		$thumb_id = get_post_thumbnail_id( get_the_ID() );
 		$args = array(
 			'post_type' => 'attachment',
@@ -445,11 +437,7 @@ echo $listclass;
 			'order' => $order,
 			'post_parent' => get_the_ID(),
 			'exclude' => $thumb_id // Exclude featured thumbnail
-<<<<<<< HEAD
 		);
-=======
-		); 
->>>>>>> ec02a6a812759e57b7c8a22b400ee90e6df9cd5a
 		$attachments = get_posts($args);
 		$images_count = count( $attachments );
 
@@ -461,11 +449,7 @@ echo $listclass;
 				}
 				$last_child = $key%$images_count == ($images_count-1) ? 'last-child' : '';
 				$items .= sprintf( $before, esc_attr( $last_child ) ) . $link_before . wp_get_attachment_image( $attachment->ID, $imagesize ) .$link_after . $after;
-<<<<<<< HEAD
 			endforeach;
-=======
-			endforeach;	
->>>>>>> ec02a6a812759e57b7c8a22b400ee90e6df9cd5a
 		endif;
 
 		$output .= sprintf( $items_wrap, esc_attr( $wrap_class ), $items );
