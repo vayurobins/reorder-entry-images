@@ -20,11 +20,15 @@ class ReorderEntryImages {
 	/**
 	 * Plugin version, used for cache-busting of style and script file references.
 	 *
-	 * @since   1.0.0
+	 * @since   1.0
 	 *
 	 * @var     string
 	 */
+<<<<<<< HEAD
 	protected $version = '1.0.2';
+=======
+	protected $version = '1.0.1';
+>>>>>>> ec02a6a812759e57b7c8a22b400ee90e6df9cd5a
 
 	/**
 	* Unique identifier for your plugin.
@@ -68,7 +72,7 @@ class ReorderEntryImages {
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
-	 * @since     1.0.0
+	 * @since     1.0
 	 */
 	private function __construct() {
 
@@ -110,7 +114,7 @@ class ReorderEntryImages {
 	/**
 	 * Return an instance of this class.
 	 *
-	 * @since     1.0.0
+	 * @since     1.0
 	 *
 	 * @return    object    A single instance of this class.
 	 */
@@ -169,7 +173,7 @@ class ReorderEntryImages {
 	/**
 	 * Register and enqueue admin-specific style sheet.
 	 *
-	 * @since     1.0.0
+	 * @since     1.0
 	 *
 	 * @return    null    Return early if no settings page is registered.
 	 */
@@ -226,7 +230,7 @@ class ReorderEntryImages {
 	/**
 	 * Register plugin settings
 	 *
-	 * @since     1.0.0
+	 * @since     1.0
 	 */
 	public function register_plugin_settings() {
 
@@ -268,7 +272,7 @@ class ReorderEntryImages {
 	/**
 	 * Add a custom metabox to post, page or cpt, that displays the attachments in a list.
 	 *
-	 * @since   1.0.0
+	 * @since   1.0
 	 */
 	public function add_image_sortable_box() {
 
@@ -299,7 +303,7 @@ class ReorderEntryImages {
 	 * Gets all attachments and displays them in a sortable list on admin pages.
 	 *
 	 * @param 	array|object 	$p
-	 * @since   1.0.0
+	 * @since   1.0
 	 */
 	public function add_image_metabox_sorter( $p ) {
 
@@ -352,7 +356,7 @@ class ReorderEntryImages {
 	 * @param 	array 	$data			Sinitized post data
 	 * @param 	array 	$_post_vars		Raw post data
 	 * @return	$data
-	 * @since   1.0.0
+	 * @since   1.0
 	 */
 	public function sort_images_meta_save( $data, $_post_vars ) {
 		//global $post_ID;
@@ -427,7 +431,11 @@ class ReorderEntryImages {
 		extract( shortcode_atts( $defaults, $attr ) );
 
 		$wrap_class = $listclass ? $listclass : '';
+<<<<<<< HEAD
 
+=======
+echo $listclass;
+>>>>>>> ec02a6a812759e57b7c8a22b400ee90e6df9cd5a
 		$thumb_id = get_post_thumbnail_id( get_the_ID() );
 		$args = array(
 			'post_type' => 'attachment',
@@ -437,7 +445,11 @@ class ReorderEntryImages {
 			'order' => $order,
 			'post_parent' => get_the_ID(),
 			'exclude' => $thumb_id // Exclude featured thumbnail
+<<<<<<< HEAD
 		);
+=======
+		); 
+>>>>>>> ec02a6a812759e57b7c8a22b400ee90e6df9cd5a
 		$attachments = get_posts($args);
 		$images_count = count( $attachments );
 
@@ -449,7 +461,11 @@ class ReorderEntryImages {
 				}
 				$last_child = $key%$images_count == ($images_count-1) ? 'last-child' : '';
 				$items .= sprintf( $before, esc_attr( $last_child ) ) . $link_before . wp_get_attachment_image( $attachment->ID, $imagesize ) .$link_after . $after;
+<<<<<<< HEAD
 			endforeach;
+=======
+			endforeach;	
+>>>>>>> ec02a6a812759e57b7c8a22b400ee90e6df9cd5a
 		endif;
 
 		$output .= sprintf( $items_wrap, esc_attr( $wrap_class ), $items );
