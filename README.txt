@@ -68,9 +68,12 @@ Please remember to save the changes by pressing the Update button.
 
 == Changelog ==
 
-= 1.0.1 =
+= 1.0.2 =
 * Added shortcode, to add images to your post/page.
 * Updated settings page with som information about the plugin and author.
+
+= 1.0.1 =
+* Fixed minor bug
 
 = 1.0 =
 * Launch first version of plugin.
