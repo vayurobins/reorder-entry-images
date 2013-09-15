@@ -103,7 +103,6 @@ class ReorderEntryImages {
 
 		// Add list attached images shortcode
 		add_shortcode( 'list_attached_images', array( $this, 'list_attached_images_shortcode' ) );
-
 	}
 
 
