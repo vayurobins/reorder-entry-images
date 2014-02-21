@@ -309,7 +309,7 @@ class ReorderEntryImages {
 			'orderby'        => 'menu_order',
 			'post_type'      => 'attachment',
 			'post_parent'    => get_the_ID(),
-			'post_mime_type' => 'image/jpeg',
+			'post_mime_type' => array('image/jpeg', 'image/png', 'image/gif'),
 			'post_status'    => null,
 			'numberposts'    => -1,
 			'exclude'		 => $thumb_id // Exclude featured thumbnail
@@ -432,7 +432,7 @@ class ReorderEntryImages {
 		$thumb_id = get_post_thumbnail_id( get_the_ID() );
 		$args = array(
 			'post_type' => 'attachment',
-			'post_mime_type'  => 'image/jpeg',
+			'post_mime_type'  => array('image/jpeg', 'image/png', 'image/gif'),
 			'orderby' => 'menu_order',
 			'numberposts' => $numberimages,
 			'order' => $order,
