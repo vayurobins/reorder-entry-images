@@ -2,18 +2,30 @@
 Contributors: Vayu
 Tags: attachments, images, reorder, sort, entry, post, custom post types, page, drag & drop
 Requires at least: 3.4
-Tested up to: 4.2.1
+Tested up to: 4.4.3
 Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Get the attachments (images only) that belong to a post/page/post-type and display them in a list. This list can be reordered by drag and drop.
+Get all the attachments (images only) that belong to a post/page/post-type and display them in a list. This list can be reordered by drag and drop.
 
 == Description ==
 
 This plugin will help you manually reorder or sort the images attached to your post, custom post type or page.  Once installed and activated you can choose which post type or page you want this functionality on.  All the images attached to that specific post or page will then be listed on the post-edit page in the admin.  You will then be able to drag & drop the images in the order you want them to be listed.
 
 This will only affect those images uploaded to the specific post or page.
+
+Insert images into post/page with this shortcode: `[list_attached_images]`
+Her are some parameters
+
+* imagesize: ie. thumbnail, medium, large
+* numberimages: ie. -1, 0, 5
+* imagelink: link to the image file - false/true
+* order: ie. desc, asc
+* listclass: use your own class
+
+Example:
+`[list_attached_images imagesize="large" numberimages="3" imagelink="true" order="asc" listclass="my-images"]`
 
 Here is the php code that will help you display the images in your theme:
 
@@ -34,17 +46,6 @@ if ( $attachments ) :
 	endforeach;
 endif;`
 
-Insert images into post/page with this shortcode: `[list_attached_images]`
-Her are some parameters
-
-* imagesize: ie. thumbnail, medium, large
-* numberimages: ie. -1, 0, 5
-* imagelink: link to the image file - false/true
-* order: ie. desc, asc
-* listclass: use your own class
-
-Example:
-`[list_attached_images imagesize="large" numberimages="3" imagelink="true" order="asc" listclass="my-images"]`
 
 == Website ==
 http://vayu.dk/reorder-entry-images/
@@ -69,7 +70,8 @@ Please remember to save the changes by pressing the Update button.
 == Changelog ==
 
 = 1.0.6 =
-* Updated for WordPress 4.2.1.
+* Updated for WordPress 4.4.3
+* Fetaure: Added delete function on each image row.
 
 = 1.0.5 =
 * Updated for WordPress 4.0.

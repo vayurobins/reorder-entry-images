@@ -24,7 +24,8 @@ class ReorderEntryImages {
 	 *
 	 * @var     string
 	 */
-	protected $version = '1.0.4';
+	protected $version = '1.0.6';
+	
 
 	/**
 	* Unique identifier for your plugin.
@@ -98,6 +99,10 @@ class ReorderEntryImages {
 
 			// Updates the attachments when saving
 			add_filter( 'wp_insert_post_data', array( $this, 'sort_images_meta_save' ), 99, 2 );
+
+			// This function is called with ajax, to get the products under the chosen category and display them in the form.
+			add_action( 'wp_ajax_delete_attachment', array( $this, 'delete_attachment' ) );
+
 
 		endif;
 
@@ -344,7 +349,7 @@ class ReorderEntryImages {
 			'orderby'        => 'menu_order',
 			'post_type'      => 'attachment',
 			'post_parent'    => get_the_ID(),
-			'post_mime_type' => array('image/jpeg', 'image/png', 'image/gif'),
+			'post_mime_type' => array( 'image/jpeg', 'image/png', 'image/gif' ),
 			'post_status'    => null,
 			'numberposts'    => -1,
 			'exclude'		 => $thumb_id // Exclude featured thumbnail
@@ -357,11 +362,11 @@ class ReorderEntryImages {
 
 			<div class="imageuploader">
 				<div id="attachmentcontainer">
-					<?php $i = 0; foreach( $attachments as $attachment ) : // pre($attachment);
+					<?php $i = 0; foreach( $attachments as $attachment ) :
 						$editorimage = wp_get_attachment_image_src( $attachment->ID, 'thumbnail', false, false);
 						$i++;
 						?>
-						<div class="attachment" id="image-<?php echo $attachment->ID; ?>">
+						<div class="attachment" id="image-<?php echo intval( $attachment->ID ); ?>" aria-label="<?php echo esc_attr( $attachment->post_title ); ?>" data-id="<?php echo intval( $attachment->ID ); ?>">
 							<div class="image">
 								<a href="<?php echo esc_url( get_admin_url( '', 'post.php?post='.$attachment->ID.'&action=edit' ) ); ?>" title="<?php echo esc_attr( $attachment->post_title ); ?>">
 									<img width="100" height="auto" src="<?php echo esc_url( $editorimage[0] ); ?>" />
@@ -370,6 +375,8 @@ class ReorderEntryImages {
 							</div>
 							<div class="title"><?php echo esc_attr( $attachment->post_title ); ?></div>
 							<span class="number"><?php echo esc_attr( intval( $i ) ); ?></span>
+
+							<a class="button-link delete-attachment" data-name="remove" data-nonce="<?php echo wp_create_nonce( 'delete-attachment-nonce' ); ?>" href="#">Delete</a>
 						</div>
 					<?php endforeach; ?>
 					<div style="clear: both;"></div>
@@ -381,6 +388,34 @@ class ReorderEntryImages {
 	}
 
 	/**
+	 * Delete attachment ajax function
+	 *
+	 */
+	function delete_attachment() {
+
+		$nonce = $_GET['_ajax_nonce'];
+	
+		// check to see if the submitted nonce matches with the generated nonce we created earlier
+		if ( ! wp_verify_nonce( $nonce, 'delete-attachment-nonce' ) ) { die ( 'Busted!'); }
+	
+		$json_array		= array();
+		$attachment_id	= isset( $_GET['attachment_id'] ) ? absint( $_GET['attachment_id'] ) : '';
+		
+		if( ! empty( $attachment_id ) ) {
+			if ( false === wp_delete_attachment( (int) $attachment_id ) ) {
+				$json_array['attachment_id'] = 0;
+			}else{
+				$json_array['attachment_id'] = (int) $attachment_id;
+			}
+		}
+
+		echo json_encode( $json_array );
+
+		// IMPORTANT: don't forget to "exit"
+		exit;
+	}
+
+	/**
 	 * Saves the data to the post
 	 *
 	 * @param 	array 	$data			Sinitized post data
@@ -389,7 +424,7 @@ class ReorderEntryImages {
 	 * @since   1.0.0
 	 */
 	public function sort_images_meta_save( $data, $_post_vars ) {
-		//global $post_ID;
+
 		$post_ID = $_post_vars['ID'];
 
 		if( !in_array( $data['post_type'], $this->the_post_type ) || !isset( $_post_vars['images_sort_nonce'] ) ) {
@@ -432,7 +467,7 @@ class ReorderEntryImages {
 		// Get all post types registered.
 		$object_types = get_post_types( array('public' => true), 'objects' );
 		$object_types = apply_filters( 'rei-post-object-types', $object_types, $key );
-		if ( isset($object_types[$key]) ) {
+		if ( isset( $object_types[$key] ) ) {
 			return $object_types[$key];
 		}
 
@@ -450,14 +485,14 @@ class ReorderEntryImages {
 	 */
 	function list_attached_images_shortcode( $attr ) {
 		$defaults =  array(
-			'imagesize'      => 'thumbnail',
-			'numberimages'	  => 0,
-			'order'			  => 'desc',
-			'listclass'      => 'list-images',
-			'before'          => '<li class="image-item %s">',
-			'after'           => '</li>',
-			'imagelink'      => false,
-			'items_wrap'      => '<ul id="list-attached-images" class="%1$s">%2$s</ul>',
+			'imagesize'     => 'thumbnail',
+			'numberimages'	=> 0,
+			'order'			=> 'desc',
+			'listclass'     => 'list-images',
+			'before'        => '<li class="image-item %s">',
+			'after'         => '</li>',
+			'imagelink'     => false,
+			'items_wrap'    => '<ul id="list-attached-images" class="%1$s">%2$s</ul>',
 		);
 		/* Merge the input attributes and the defaults. */
 		extract( shortcode_atts( $defaults, $attr ) );
@@ -484,7 +519,7 @@ class ReorderEntryImages {
 					$link_before = sprintf( '<a href="%s" title="%s">', esc_attr( $attachment->guid ), esc_attr( $attachment->post_title ) );
 					$link_after = '</a>';
 				}
-				$last_child = $key%$images_count == ($images_count-1) ? 'last-child' : '';
+				$last_child = $key % $images_count == ( $images_count-1 ) ? 'last-child' : '';
 				$items .= sprintf( $before, esc_attr( $last_child ) ) . $link_before . wp_get_attachment_image( $attachment->ID, $imagesize ) .$link_after . $after;
 			endforeach;
 		endif;
