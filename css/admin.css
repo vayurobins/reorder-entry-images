@@ -32,9 +32,21 @@
 	height: auto;
 	display: block;
 }
-#attachmentcontainer .number {
+#attachmentcontainer .number,
+#attachmentcontainer .delete-attachment {
 	float: right;
 	color: #aaa;
 	line-height: 38px;
 	margin-right: 5px;
+}
+#attachmentcontainer .number {
+	width: 20px;
+	text-align: right;
+}
+#attachmentcontainer .delete-attachment {
+	color: #f00;
+}
+#attachmentcontainer .delete-attachment:hover,
+#attachmentcontainer .delete-attachment:focus {
+	color: #333;
 }

@@ -363,15 +363,15 @@ class ReorderEntryImages {
 			<div class="imageuploader">
 				<div id="attachmentcontainer">
 					<?php $i = 0; foreach( $attachments as $attachment ) :
-						$editorimage = wp_get_attachment_image_src( $attachment->ID, 'thumbnail', false, false);
+						$editorimage = wp_get_attachment_image_src( intval( $attachment->ID ), 'thumbnail', false, false);
 						$i++;
 						?>
 						<div class="attachment" id="image-<?php echo intval( $attachment->ID ); ?>" aria-label="<?php echo esc_attr( $attachment->post_title ); ?>" data-id="<?php echo intval( $attachment->ID ); ?>">
 							<div class="image">
-								<a href="<?php echo esc_url( get_admin_url( '', 'post.php?post='.$attachment->ID.'&action=edit' ) ); ?>" title="<?php echo esc_attr( $attachment->post_title ); ?>">
+								<a href="<?php echo esc_url( get_admin_url( '', 'post.php?post='. intval( $attachment->ID ) .'&action=edit' ) ); ?>" title="<?php echo esc_attr( $attachment->post_title ); ?>">
 									<img width="100" height="auto" src="<?php echo esc_url( $editorimage[0] ); ?>" />
 								</a>
-								<input type="hidden" name="att_id[]" id="att_id" value="<?php echo esc_attr( $attachment->ID ); ?>" />
+								<input type="hidden" name="att_id[]" id="att_id" value="<?php echo intval( $attachment->ID ); ?>" />
 							</div>
 							<div class="title"><?php echo esc_attr( $attachment->post_title ); ?></div>
 							<span class="number"><?php echo esc_attr( intval( $i ) ); ?></span>
@@ -520,7 +520,7 @@ class ReorderEntryImages {
 					$link_after = '</a>';
 				}
 				$last_child = $key % $images_count == ( $images_count-1 ) ? 'last-child' : '';
-				$items .= sprintf( $before, esc_attr( $last_child ) ) . $link_before . wp_get_attachment_image( $attachment->ID, $imagesize ) .$link_after . $after;
+				$items .= sprintf( $before, esc_attr( $last_child ) ) . $link_before . wp_get_attachment_image( intval( $attachment->ID ), $imagesize ) .$link_after . $after;
 			endforeach;
 		endif;
 
