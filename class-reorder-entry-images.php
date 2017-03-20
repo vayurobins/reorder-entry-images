@@ -24,7 +24,7 @@ class ReorderEntryImages {
 	 *
 	 * @var     string
 	 */
-	protected $version = '1.0.7';
+	protected $version = '1.0.8';
 	
 
 	/**
